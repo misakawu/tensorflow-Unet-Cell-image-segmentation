@@ -2,6 +2,7 @@ import glob
 
 import numpy as np
 from tensorflow.keras.preprocessing.image import img_to_array, load_img
+from tensorflow.keras.utils import to_categorical
 
 
 class dataProcess(object):
@@ -45,7 +46,8 @@ class dataProcess(object):
             img = load_img(self.data_path + "/" + midname, grayscale=True)
             # print(image)
             label = load_img(self.label_path + "/" + midname, grayscale=True)
-            img = img_to_array(img)  # 图片转为数组，转换后元素类型是浮点型
+            # 图片转为数组，转换后元素类型是浮点型
+            img = img_to_array(img)
             label = img_to_array(label)
             imgdatas[i] = img
             imglabels[i] = label
@@ -86,12 +88,11 @@ class dataProcess(object):
         print('load train images...')
         print('-' * 30)
         # train
-        imgs_train = np.load(
-            self.npy_path + "/imgs_train.npy")  # imgs_train = np.load(self.npy_path+"\\imgs_train.npy")
+        imgs_train = np.load('./'+self.npy_path + "/imgs_train.npy")
         # train的label
-        imgs_mask_train = np.load(
-            self.npy_path + "/imgs_mask_train.npy")  # imgs_mask_train = np.load(self.npy_path+"\\imgs_mask_train.npy")
-        imgs_train = imgs_train.astype('float32')  # 转换为float32
+        imgs_mask_train = np.load(self.npy_path + "/imgs_mask_train.npy")
+        # 转换为float32
+        imgs_train = imgs_train.astype('float32')
         imgs_mask_train = imgs_mask_train.astype('float32')
         # 二值化操作，0、255
         imgs_train /= 255
@@ -100,6 +101,10 @@ class dataProcess(object):
         imgs_mask_train /= 255
         imgs_mask_train[imgs_mask_train > 0.5] = 1
         imgs_mask_train[imgs_mask_train <= 0.5] = 0
+
+        # softmax适配处理
+        imgs_mask_train=to_categorical(imgs_mask_train)
+
         return imgs_train, imgs_mask_train
 
     def load_test_data(self):

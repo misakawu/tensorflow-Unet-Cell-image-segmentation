@@ -21,7 +21,7 @@
 │  unet.hdf5 //训练记录文件  
 │  unet.py //模型主体  
 
-**重新生成模型参数时，若报错oom（out of memory）可设置使用cpu运行**
+**重新生成模型参数时，若报错oom（out of memory）可设置使用cpu运行**  
 直接运行main.py即可
 
 tensorflow-gpu            2.4.1

@@ -4,7 +4,7 @@ from tensorflow.keras.models import *
 from tensorflow.keras.optimizers import *
 from tensorflow.python.keras.layers import merge
 from tensorflow.keras.preprocessing.image import array_to_img
-
+import tensorflow as tf
 from data import *
 
 
@@ -77,11 +77,11 @@ class myUnet(object):
         conv9 = Conv2D(64, 3, activation='relu', padding='same', kernel_initializer='he_normal')(merge9)
         conv9 = Conv2D(64, 3, activation='relu', padding='same', kernel_initializer='he_normal')(conv9)
         conv9 = Conv2D(2, 3, activation='relu', padding='same', kernel_initializer='he_normal')(conv9)
-        conv10 = Conv2D(1, 1, activation='sigmoid')(conv9)
-
+        # conv10 = Conv2D(1, 1, activation='sigmoid')(conv9)
+        conv10 = Conv2D(2, 1, activation='softmax')(conv9)
         model = Model(inputs=inputs, outputs=conv10)
 
-        model.compile(optimizer=Adam(lr=1e-4), loss='binary_crossentropy',
+        model.compile(optimizer=Adam(lr=1e-4), loss='categorical_crossentropy',
                       metrics=['accuracy'])
         model.summary()
 
@@ -99,10 +99,9 @@ class myUnet(object):
         model_checkpoint = ModelCheckpoint('unet.hdf5', monitor='loss', verbose=1, save_best_only=True)
         print('Fitting model...')
         # 如有需要，使用cpu运行
-        # with tf.device("/cpu:0"):
+        with tf.device("/cpu:0"):
         # epoch=3即可
-        model.fit(imgs_train, imgs_mask_train, batch_size=4, epochs=10, verbose=1, validation_split=0.2, shuffle=True,
-                  callbacks=[model_checkpoint])
+            model.fit(imgs_train, imgs_mask_train, batch_size=4, epochs=10, verbose=1, validation_split=0.2, shuffle=True,callbacks=[model_checkpoint])
         print('save model')
         model.save_weights("my_model_weights.h5")
 
@@ -113,12 +112,19 @@ class myUnet(object):
         # 二值化
         # imgs[imgs > 0.5] = 1
         # imgs[imgs <= 0.5] = 0
+
+        # for i in range(imgs.shape[0]):
+        #     img = imgs[i]
+        #     avg = np.mean(img)
+        #     img[img > avg + 0.025] = 1
+        #     img[img <= avg] = 0
         for i in range(imgs.shape[0]):
-            img = imgs[i]
-            avg = np.mean(img)
-            img[img > avg + 0.025] = 1
-            img[img <= avg] = 0
+            img=imgs[i][:,:,]
+            img=np.argmax(img,axis=2)
+
             img *= 255
+            print(img)
+            img = np.expand_dims(img,axis=2)
             img = array_to_img(img)
             img.save("./results/results_jpg/%d.jpg" % (i))
 
@@ -135,7 +141,10 @@ class myUnet(object):
 
         print('predict test data')
         imgs_mask_test = model.predict(imgs_test, batch_size=1, verbose=1)
+
         np.save('./results/imgs_mask_test.npy', imgs_mask_test)
+
+        self.save_img()
 
 
 if __name__ == '__main__':
