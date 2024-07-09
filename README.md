@@ -1,28 +1,29 @@
   **encode=gbk**  
-ÎÄ¼ş½á¹¹£º  
-©¦  
-©À©¤data //Ô­Í¼Æ¬  
-©¦  ©À©¤test  
-©¦  ©¦  ©¸©¤image  
-©¦  ©¸©¤train  
-©¦      ©À©¤image  
-©¦      ©¸©¤label  
-©À©¤npy_data  
-©¦     ©À©¤imgs_mask_train.npy  
-©¦     ©À©¤imgs_test.npy  
-©¦     ©¸©¤imgs_train.npy  
-©À©¤results  
-©¦  ©À©¤results_jpg//´ËÎÄ¼ş¼Ğ´æ·ÅÑµÁ·½á¹ûµÄºÚ°×Í¼Ïñ  
-©¦  ©¦    
-©¦  ©¸©¤imgs_mask_test.npy //ÑµÁ·½á¹ûµÄ¾ØÕó
-©¦  data.py //Êı¾İÔ¤´¦Àí  
-©¦  main.py     
-©¦  my_model_weights.h5 //Ä£ĞÍ²ÎÊı  
-©¦  unet.hdf5 //ÑµÁ·¼ÇÂ¼ÎÄ¼ş  
-©¦  unet.py //Ä£ĞÍÖ÷Ìå  
+æ–‡ä»¶ç»“æ„ï¼š  
+â”‚  
+â”œâ”€data //åŸå›¾ç‰‡  
+â”‚  â”œâ”€test  
+â”‚  â”‚  â””â”€image  
+â”‚  â””â”€train  
+â”‚      â”œâ”€image  
+â”‚      â””â”€label  
+â”œâ”€npy_data  
+â”‚     â”œâ”€imgs_mask_train.npy  
+â”‚     â”œâ”€imgs_test.npy  
+â”‚     â””â”€imgs_train.npy  
+â”œâ”€results  
+â”‚  â”œâ”€results_jpg//æ­¤æ–‡ä»¶å¤¹å­˜æ”¾è®­ç»ƒç»“æœçš„é»‘ç™½å›¾åƒ  
+â”‚  â”‚    
+â”‚  â””â”€imgs_mask_test.npy //è®­ç»ƒç»“æœçš„çŸ©é˜µ
+â”‚  data.py //æ•°æ®é¢„å¤„ç†  
+â”‚  main.py     
+â”‚  my_model_weights.h5 //æ¨¡å‹å‚æ•°  
+â”‚  unet.hdf5 //è®­ç»ƒè®°å½•æ–‡ä»¶  
+â”‚  unet.py //æ¨¡å‹ä¸»ä½“  
 
-**ÖØĞÂÉú³ÉÄ£ĞÍ²ÎÊıÊ±£¬Èô±¨´íoom£¨out of memory£©¿ÉÉèÖÃÊ¹ÓÃcpuÔËĞĞ**
-Ö±½ÓÔËĞĞmain.py¼´¿É
+**é‡æ–°ç”Ÿæˆæ¨¡å‹å‚æ•°æ—¶ï¼Œè‹¥æŠ¥é”™oomï¼ˆout of memoryï¼‰å¯è®¾ç½®ä½¿ç”¨cpuè¿è¡Œ**  
+ç›´æ¥è¿è¡Œmain.pyå³å¯  
+*è¯¥é¡¹ç›®æ²¡æœ‰ä¸Šä¼ é¢„è®­ç»ƒæ–‡ä»¶ï¼Œä½¿ç”¨å‰éœ€è¦è‡ªå·±è®­ç»ƒ*  
 
 tensorflow-gpu            2.4.1
 numpy                     1.19.2
